@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "vector-db-with-llm"
+version = "0.1.0"
+description = ""
+authors = ["skip"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langchain = "^0.3.7"
+langchainhub = "^0.1.21"
+tiktoken = "^0.8.0"
+chromadb = "^0.5.18"
+langchain-community = "^0.3.7"
+bs4 = "^0.0.2"
+python-dotenv = "^1.0.1"
+pypdf = "^5.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
