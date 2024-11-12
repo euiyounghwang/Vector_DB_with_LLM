@@ -1,7 +1,8 @@
 # Vector_DB_with_LLM
 Vector_DB_with_LLM
-- Example : https://colab.research.google.com/github/i-am-shuan/learn-langchain/blob/main/langchain_RAG_example.ipynb
 
+LangChain(https://github.com/langchain-ai/langchain) is a framework for developing applications powered by large language models (LLMs). LangChain is an open source framework for building applications based on large language models (LLMs). LLMs are large deep-learning models pre-trained on large amounts of data that can generate responses to user queries. for example, answering questions or creating images from text-based prompts. Prompts are queries people use to seek responses from an LLM.
+- Example : https://colab.research.google.com/github/i-am-shuan/learn-langchain/blob/main/langchain_RAG_example.ipynb
 
 
 
@@ -17,7 +18,7 @@ poetry config virtualenvs.in-project true
 pip install poetry
 poetry init
 poetry add openai langchain langchainhub tiktoken chromadb langchain-community bs4 python-dotenv
-...
+```
 
 #### Python V3.9 Install
 ```bash
