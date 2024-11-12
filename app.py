@@ -20,6 +20,8 @@ print('\n\n')
 
 # PDF 내용을 작은 chunk 단위로 나누기
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+''' split characters  ["\n\n", "\n", " ", ""]'''
+''' length_function , chunk_size , chunk_overlap, add_start_index (Determines whether to include the start position of the chunk within the original document in the metadata) '''
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
 splits = text_splitter.split_documents(pages)
