@@ -1,0 +1,5 @@
+2020. 12. 2. — /usr/lib/python3.8/site-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.2) or chardet (3.0.4) doesn't match a supported version!
+답변 1개
+ 
+인기 답변: 
+I thought it was a system issue, but unsetting $PYTHONUSERBASE made 
