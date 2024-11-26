@@ -16,13 +16,14 @@ os.environ['CURL_CA_BUNDLE'] = ''
 current_path = os.path.dirname(os.path.abspath(__file__))
 
 def loader_text(extension):
-    ''' multiple files for *.txt using DirectoryLoader'''
+    ''' multiple files for *.txt or *.pdf using DirectoryLoader or PyPDFDirectoryLoaderusing'''
     ''' chunking before saving text into vector store'''
     ''' pip install pypdf for pdf file'''
     if extension == 'txt':
 
         loader = TextLoader(os.getcwd() + '/data/test.txt', encoding="utf-8")
         data = loader.load()
+        # print(data)
         
         '''
         text_loader_kwargs = {"autodetect_encoding": True}

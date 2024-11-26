@@ -22,6 +22,7 @@ RAG(Retrieval Augemented Generation) is an AI technique that allows companies to
 - In a nutshell, RAG helps companies retrieve and use their data from various internal sources for better generative AI results. 
 - To achieve this improved accuracy, RAG works in conjunction with a specialized type of database — called a vector database — to store data in a numeric format that makes sense for AI, and retrieve it when prompted.
 - RAG can’t do its job without the vector database doing its job.V
+- Step (https://blog.naver.com/htk1019/223442628204) : Document Loader ⮕ Text Splitter ⮕ Embedding ⮕ Vector Store (Saving vector) ⮕ Retriver
 
 
 ### Using Poetry: Create the virtual environment in the same directory as the project and install the dependencies:
