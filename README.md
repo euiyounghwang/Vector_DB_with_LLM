@@ -24,6 +24,26 @@ RAG(Retrieval Augemented Generation) is an AI technique that allows companies to
 - RAG can’t do its job without the vector database doing its job.V
 - Step (https://blog.naver.com/htk1019/223442628204) : Document Loader ⮕ Text Splitter ⮕ Embedding ⮕ Vector Store (Saving vector) ⮕ Retriver
 
+Streamlit is an open-source Python framework for data scientists and AI/ML engineers to deliver interactive data apps
+- https://github.com/streamlit/llm-examples, https://pypi.org/project/streamlit-chat/
+- Streamlit Install & Run
+```bash
+pip install streamlit 
+pip install streamlit-chat
+
+streamlit run [streamlit-filenam.py] [--server.port 30001]
+streamlit run app.py
+```
+- App testing : https://github.com/streamlit/llm-examples/blob/main/.github/workflows/app-testing.yml
+- requirements-dev.txt
+```bash
+black==23.3.0
+mypy==1.4.1
+pre-commit==3.3.3
+watchdog
+pytest
+```
+
 
 ### Using Poetry: Create the virtual environment in the same directory as the project and install the dependencies:
 - Gunicorn/FastAPI : https://chaechae.life/blog/fastapi-deployment-gunicorn#google_vignette
@@ -47,7 +67,7 @@ pip install --q openai langchain langchainhub tiktoken chromadb langchain-commun
 # ImportError: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'OpenSSL 1.0.2k-fips  26 Jan 2017'. See: https://github.com/urllib3/urllib3/issues/2168
 pip install urllib3==1.26.18
 pip install pytz
+pip install requests==2.27.1
 ```
-
 
 </i>
