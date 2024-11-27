@@ -43,7 +43,7 @@ pre-commit==3.3.3
 watchdog
 pytest
 ```
-- Codespaces(https://github.com/features/codespaces, https://velog.io/@profile_exe/Github-Codespaces): GitHub Codespaces gets you up and coding faster with fully configured, secure cloud development environments native to GitHub.
+- Codespaces (https://github.com/features/codespaces, https://velog.io/@profile_exe/Github-Codespaces): GitHub Codespaces gets you up and coding faster with fully configured, secure cloud development environments native to GitHub.
 
 
 ### Using Poetry: Create the virtual environment in the same directory as the project and install the dependencies:
