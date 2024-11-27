@@ -1,5 +1,5 @@
 # Vector_DB_with_LLM
-Vector_DB_with_LLM
+<i>Vector_DB_with_LLM
 
 LangChain(https://github.com/langchain-ai/langchain) is a framework for developing applications powered by large language models (LLMs). LangChain is an open source framework for building applications based on large language models (LLMs). LLMs are large deep-learning models pre-trained on large amounts of data that can generate responses to user queries. for example, answering questions or creating images from text-based prompts. Prompts are queries people use to seek responses from an LLM.
 - Example : https://colab.research.google.com/github/i-am-shuan/learn-langchain/blob/main/langchain_RAG_example.ipynb, https://velog.io/@kwon0koang/%EB%A1%9C%EC%BB%AC%EC%97%90%EC%84%9C-Llama3-%EB%8F%8C%EB%A6%AC%EA%B8%B0
@@ -49,3 +49,5 @@ pip install urllib3==1.26.18
 pip install pytz
 ```
 
+
+</i>
