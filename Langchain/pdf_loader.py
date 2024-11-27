@@ -13,7 +13,7 @@ from langchain.document_loaders import PyPDFLoader # type: ignore
 import os
 
 # loader = PyPDFLoader("https://snuac.snu.ac.kr/2015_snuac/wp-content/uploads/2015/07/asiabrief_3-26.pdf")
-loader = PyPDFLoader(os.getcwd() + "/data/asiabrief_3-26.pdf")
+loader = PyPDFLoader(os.getcwd() + "/Data/asiabrief_3-26.pdf")
 pages = loader.load_and_split()
 print(pages)
 

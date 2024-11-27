@@ -21,7 +21,7 @@ def loader_text(extension):
     ''' pip install pypdf for pdf file'''
     if extension == 'txt':
 
-        loader = TextLoader(os.getcwd() + '/data/test.txt', encoding="utf-8")
+        loader = TextLoader(os.getcwd() + '/Data/test.txt', encoding="utf-8")
         data = loader.load()
         # print(data)
         
@@ -39,7 +39,7 @@ def loader_text(extension):
         data = loader.load()
        
     elif extension == 'pdf':
-        loader = PyPDFLoader(os.getcwd() + "/data/asiabrief_3-26.pdf")
+        loader = PyPDFLoader(os.getcwd() + "/Data/asiabrief_3-26.pdf")
         data = loader.load_and_split()
         # print(data)
 
