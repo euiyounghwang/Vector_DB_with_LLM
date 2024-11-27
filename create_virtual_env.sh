@@ -9,7 +9,7 @@ VENV=".venv"
 
 function activate_virtual_env() {
     # Create virtualenv
-    python -m venv $SCRIPTDIR/$VENV
+    python3.11 -m venv $SCRIPTDIR/$VENV
     
      # Python 3.11.7 with Window
     if [ -d "$VENV/bin" ]; then

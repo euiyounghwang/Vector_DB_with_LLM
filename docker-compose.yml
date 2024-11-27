@@ -1,0 +1,121 @@
+version: '3'
+#docker-compose -f ./docker-compose.yml up or docker-compose up
+name: python-cicd-restapi
+services:
+  
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    ports:
+      - 8089:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - ~/jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/local/bin/docker
+      
+      
+  fn-cicd-basic-omni_es:
+    image: fn-cicd-basic-api:omni_es
+    container_name: fn-cicd-basic-omni_es
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: omni_es
+    ports:
+      - 9203:9201
+    # restart: unless-stopped
+    environment:
+      # v_7
+      # - node.name=fn-dm-bees-omni-data-01
+      # - discovery.type=single-node
+      # - http.port=9201
+      # - http.cors.enabled=true
+      # - http.cors.allow-origin=* 
+      # - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      # - http.cors.allow-credentials=true
+      # - xpack.security.enabled=false
+      # - bootstrap.system_call_filter=false
+      # - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      
+      # v_8
+      - http.host=0.0.0.0
+      - node.name=fn-dm-bees-omni-data-01
+      - node.roles=[data, master]
+      - cluster.name=docker-elasticsearch
+      - cluster.initial_master_nodes=fn-dm-bees-omni-data-01
+      - discovery.seed_hosts=fn-dm-bees-omni-data-01
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.license.self_generated.type=basic
+      - action.destructive_requires_name=false
+      - http.port=9201
+      - reindex.remote.whitelist=${NODE_WHITE_LIST}
+    volumes:
+      - data:/usr/share/elasticsearch/data
+      - ./Docker/elasticsearch/backup:/usr/share/elasticsearch/backup
+      - ./Docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    healthcheck:
+      test: ["CMD", "curl","-s" ,"-f", "http://localhost:9201/_cat/health"]
+    networks:
+      - bridge
+  
+  
+  fn-vector-basic-kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    container_name: fn-vector-basic-kibana
+    ports:
+      - 15601:5601
+    networks:
+      - bridge
+    depends_on:
+      - fn-vector-basic-omni_es
+    environment:
+      ELASTICSEARCH_HOSTS: http://fn-vector-basic-omni_es:9201
+  
+      
+  fn-vector-basic-api:
+    image: fn-vector-basic-api:es
+    container_name: fn-vector-basic-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    ports:
+      - 15555:5555
+    volumes:
+      - ./:/app/FN-Vector-Services
+    restart: unless-stopped
+    environment:
+      - ES_HOST=http://host.docker.internal:9201
+    networks:
+      - bridge
+      
+  fn-vector-basic-api-test:
+    image: fn-vector-basic-api:test
+    container_name: fn-vector-basic-api-test
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    ports:
+      - 15556:5555
+    volumes:
+      - ./:/app/FN-Vector-Services
+    # restart: unless-stopped
+    environment:
+      - ES_HOST=http://host.docker.internal:9201
+    networks:
+      - bridge
+      
+volumes:
+  data:
+    driver: local
+    
+networks:
+  bridge:
+    driver: bridge

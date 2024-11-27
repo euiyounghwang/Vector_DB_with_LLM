@@ -1,0 +1,10 @@
+{
+  "app": {
+    "es": {
+      "es_host": "http://localhost:9201",
+      "index" : {
+          "alias" : "metrics_search"
+      }
+    }
+  }
+}
