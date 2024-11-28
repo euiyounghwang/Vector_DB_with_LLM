@@ -97,6 +97,14 @@ cd Python-3.11.0
 ./configure --libdir=/usr/lib64 --with-openssl=/usr/bin/ssl --with-openssl-rpath=auto
 sudo make 
 sudo make altinstall 
+
+# -- Error occurs when installing packages via pip like below
+(.venv) -bash-4.2$ pip install elasticsearch==7.13
+WARNING: pip is configured with locations that require TLS/SSL, however the ssl module in Python is not available.
+WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError("Can't connect to HTTPS URL because the SSL module is not available.")': /simple/elasticsearch/
+WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError("Can't connect to HTTPS URL because the SSL module is not available.")': /simple/elasticsearch/
+ERROR: Operation cancelled by user
+
 #--
 
 
