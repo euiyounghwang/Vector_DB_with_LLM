@@ -25,7 +25,7 @@ RAG(Retrieval Augemented Generation) is an AI technique that allows companies to
 - We mean retrieving all available data, including unstructured data: emails, PDFs, chat logs, social media posts, and other types of information that could lead to a better AI output.
 - In a nutshell, RAG helps companies retrieve and use their data from various internal sources for better generative AI results. 
 - To achieve this improved accuracy, RAG works in conjunction with a specialized type of database — called a vector database — to store data in a numeric format that makes sense for AI, and retrieve it when prompted.
-- RAG can’t do its job without the vector database doing its job.V
+- RAG can’t do its job without the vector database doing its job.
 - Step (https://blog.naver.com/htk1019/223442628204) : Document Loader ⮕ Text Splitter ⮕ Embedding ⮕ Vector Store (Saving vector) ⮕ Retriver
 
 Streamlit is an open-source Python framework for data scientists and AI/ML engineers to deliver interactive data apps
