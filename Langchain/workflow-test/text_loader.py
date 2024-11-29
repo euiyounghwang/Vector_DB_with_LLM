@@ -8,6 +8,7 @@ from langchain.text_splitter import CharacterTextSplitter # type: ignore
 ''' split characters  ["\n\n", "\n", " ", ""]'''
 ''' length_function , chunk_size , chunk_overlap, add_start_index (Determines whether to include the start position of the chunk within the original document in the metadata) '''
 
+import json
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -17,15 +18,19 @@ os.environ['CURL_CA_BUNDLE'] = ''
 # current_path = os.path.dirname(os.path.abspath(__file__))
 current_path = os.path.dirname(os.path.abspath(__file__))
 
-def loader_text(extension):
+path = os.getcwd() + "/Data/"
+
+def loader_text(input_file, create_json=False):
     ''' multiple files for *.txt or *.pdf using DirectoryLoader or PyPDFDirectoryLoaderusing'''
     ''' chunking before saving text into vector store'''
 
+    content = []
+    json_format = {"ES_UPLOADED" : "JSON_FORMAT"}
+
     _chunk_size = 200
 
-    if extension == 'txt':
-
-        loader = TextLoader(os.getcwd() + '/Data/test.txt', encoding="utf-8")
+    def extract_txt_file(input_file):
+        loader = TextLoader(path + input_file, encoding="utf-8")
         data = loader.load()
         # print(data)
         
@@ -41,18 +46,57 @@ def loader_text(extension):
         )
         '''
         data = loader.load()
-       
-    elif extension == 'pdf':
+
+        return data
+    
+
+    def extract_pdf_file(input_file):
         ''' pip install pypdf for pdf file'''
-        loader = PyPDFLoader(os.getcwd() + "/Data/asiabrief_3-26.pdf")
+        loader = PyPDFLoader(path + input_file)
         data = loader.load_and_split()
         # print(data)
 
-    elif extension == 'docx':
+        return data
+    
+    
+    def extract_docx_file(input_file):
         ''' pip install docx2txt'''
-        loader = Docx2txtLoader(os.getcwd() + "/Data/Sample.docx")
+        loader = Docx2txtLoader(path + input_file)
         data = loader.load_and_split()
         # print(data)
+
+        return data
+    
+    def create_es_json_format(index_name, content):
+        ''' make a json format for ES cluster'''
+        actions = []
+        print('\n')
+        # print("Full context : {}".format('\n'.join(content)))
+
+        actions.append({'index': {'_index': index_name, '_type' : "search"}})
+        json_format.update({"CONTENT" : '\n'.join(content)})
+        actions.append(json_format)
+
+        print(json.dumps(actions, indent=2, ensure_ascii=False))
+
+        # response = es_client.bulk(body=actions)
+        # del actions[:]
+
+    
+    ''' Validate file extension if it does exist'''
+    if not "." in str(input_file):
+        data = extract_txt_file(input_file)
+    else:
+        extension = str(input_file).split(".")[1]
+        
+        if extension == 'pdf':
+            data = extract_pdf_file(input_file)
+
+        elif extension == 'docx':
+            data = extract_docx_file(input_file)
+
+        else:
+            data = extract_txt_file(input_file)
 
 
     print('***')
@@ -68,10 +112,15 @@ def loader_text(extension):
 
     for i, text in enumerate(texts):
         print(f"{i} : {text.page_content}")
+        content.append(text.page_content)
+
+    ''' any indexing into es'''
+    create_es_json_format("test_context", content)
 
 
 if __name__ == "__main__":
     ''' https://velog.io/@kingjiwoo/%EC%B0%B8%EC%A1%B0-%EB%AC%B8%EC%84%9C-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C-LangChain-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B01 '''
-    # loader_text("txt")
-    # loader_text("pdf")
-    loader_text("docx")
+    # loader_text("test.txt", create_json=True)
+    # loader_text("asiabrief_3-26.pdf", create_json=True)
+    loader_text("Sample.docx", create_json=True)
+    # loader_text("test", create_json=True)

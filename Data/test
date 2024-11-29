@@ -1,0 +1,4 @@
+일하다보니 로컬에서 작업 중인 화면을 외부 사람에게 보여줘야 할 때가 있었다.
+작업물을 올릴 개발서버도 없는 상황 ㅠㅠ
+그래서 외부에서 내 로컬서버에 임시로 접속 가능하게 하는 프로그램을 발견했다
+I got the same warning on a twine upload. Updating the packages fixed it for me. pip install -U urllib3 request
