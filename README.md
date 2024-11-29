@@ -148,6 +148,32 @@ pip install requests==2.27.1
 ```
 
 
+### API Run
+- Start servuce using `./service-start.sh`
+- Extract text using langchain.document_loaders with tika (`./Langchain/workflow/`)
+```bash
+curl -X 'POST' \
+  'http://localhost:7001/vector/uploadfile' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@Sample.doc;type=application/msword'
+
+{
+  "filename": [
+    {
+      "index": {
+        "_index": "test_context",
+        "_type": "search"
+      }
+    },
+    {
+      "ES_UPLOADED": "JSON_FORMAT",
+      "CONTENT": "This is a test Word document for the TemplatePackage example site."
+    }
+  ]
+}
+```
+
 ### Pytest
 - Go to virtual enviroment using `source .venv/bin/activate`
 - Run this command manually: `poetry run py.test -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/` or `./pytest.sh`
