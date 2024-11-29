@@ -16,7 +16,7 @@ bs4 = "^0.0.2"
 python-dotenv = "^1.0.1"
 pypdf = "^5.1.0"
 sentence-transformers = "^3.3.1"
-requests = "^2.27.1"
+requests = "2.27.1"
 faiss-cpu = "^1.9.0.post1"
 chardet = "^5.2.0"
 streamlit = "^1.40.2"
@@ -35,6 +35,7 @@ elasticsearch = "7.13"
 python-magic = "^0.4.27"
 python-pptx = "^1.0.2"
 tika = "^2.6.0"
+python-multipart = "^0.0.18"
 
 
 [build-system]

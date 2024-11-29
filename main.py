@@ -2,9 +2,7 @@ from fastapi import FastAPI # type: ignore
 from fastapi.openapi.utils import get_openapi # type: ignore
 from starlette.middleware.cors import CORSMiddleware # type: ignore
 from controller import (cluster_controller,
-                        # index_controller,
-                        # node_controller,
-                        # search_controller,
+                        vector_controller,
                         )
 from config.log_config import create_log
 
@@ -89,5 +87,6 @@ async def root():
 
 # router
 # app.include_router(search_controller.app, tags=["Search API"], )
+app.include_router(vector_controller.app, tags=["Vector API"], )
 app.include_router(cluster_controller.app, tags=["Cluster API"], )
 

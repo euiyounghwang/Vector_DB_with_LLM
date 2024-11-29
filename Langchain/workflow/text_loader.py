@@ -113,6 +113,9 @@ def loader_text(input_file, create_json=False):
         # response = es_client.bulk(body=actions)
         # del actions[:]
 
+        return actions
+    
+
     print(f'Loading {input_file}')
     
     ''' Validate file extension if it does exist'''
@@ -166,7 +169,9 @@ def loader_text(input_file, create_json=False):
             content.append(data)
 
     ''' any indexing into es'''
-    create_es_json_format("test_context", content)
+    print(f"Progressing..")
+    return create_es_json_format("test_context", content)
+    
 
 
 if __name__ == "__main__":
@@ -174,6 +179,6 @@ if __name__ == "__main__":
     # loader_text("test.txt", create_json=True)
     # loader_text("asiabrief_3-26.pdf", create_json=True)
     # loader_text("Sample.docx", create_json=True)
-    # loader_text("Sample.doc", create_json=True)
+    loader_text("Sample.doc", create_json=True)
     # loader_text("Sample.pptx", create_json=True)
-    loader_text("test", create_json=True)
+    # loader_text("test", create_json=True)

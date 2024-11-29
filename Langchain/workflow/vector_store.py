@@ -38,6 +38,7 @@ def similarity_search_with_score(keyword: str) -> None:
     print(f"Keyword: {keyword}")
     for doc, score in results_with_scores:
         print(f" > Content: {doc.page_content} / Metadata: {doc.metadata} / Score: {score}({score:.10f})")
+        # print(f" > Content: {doc} / Metadata: {doc} / Score: {score}({score:.10f})")
 
 
 if __name__ == "__main__":
