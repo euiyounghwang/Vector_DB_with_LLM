@@ -23,7 +23,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
             200: {"description" : "OK"},
             404 :{"description" : "URl not found"}
           },
-          description="Sample Payload : http://localhost:7000/vector/uploadfile", 
+          description="Sample Payload : http://localhost:7001/vector/uploadfile", 
           summary="uploadfile",
           )
 async def create_upload_file(file: UploadFile):
