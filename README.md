@@ -173,6 +173,9 @@ curl -X 'POST' \
   ]
 }
 ```
+- REST API URL: `http://localhost:7001/docs`
+
+![Alt text](./Screenshot/REST_API.png)
 
 ### Pytest
 - Go to virtual enviroment using `source .venv/bin/activate`
