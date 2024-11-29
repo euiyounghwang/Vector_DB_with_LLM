@@ -153,19 +153,29 @@ pip install requests==2.27.1
 - Run this command manually: `poetry run py.test -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/` or `./pytest.sh`
 ```bash
 $ ./pytest.sh
-================================================================================================================================================== test session starts ==================================================================================================================================================
-platform win32 -- Python 3.11.7, pytest-8.3.3, pluggy-1.5.0 -- C:\Users\euiyoung.hwang\Git_Workspace\Vector_DB_with_LLM\.venv\Scripts\python.exe
-cachedir: .pytest_cache
-rootdir: C:\Users\euiyoung.hwang\Git_Workspace\Vector_DB_with_LLM\tests
-configfile: pytest.ini
-plugins: anyio-4.6.2.post1, cov-6.0.0
-collected 2 items
-tests\test_api.py::test_skip SKIPPED (no way of currently testing this)                                                                                                                                                                                                                                            [ 50%]
-tests\test_api.py::test_api PASSED                                                                                                                                                                                                                                                                                 [100%]
+tests\test_api.py::test_skip SKIPPED (no way of currently testing this)                                                                                                                                                                                                                                           [ 50%]
+tests\test_api.py::test_api PASSED                                                                                                                                                                                                                                                                                [100%]
 
-============================================================================================================================================= 1 passed, 1 skipped in 0.18s ==============================================================================================================================================
-(.venv)
-euiyoung.hwang@US-5CD4021CL1-L MINGW64 ~/Git_Workspace/Vector_DB_with_LLM (master)
+---------- coverage: platform win32, python 3.11.7-final-0 -----------
+Name                               Stmts   Miss  Cover   Missing
+----------------------------------------------------------------
+config\config.py                       8      4    50%   16-20, 33
+config\log_config.py                  32      1    97%   42
+controller\__init__.py                 0      0   100%
+controller\cluster_controller.py      14      0   100%
+injector.py                           25      0   100%
+main.py                               23      9    61%   38-57, 69
+service\__init__.py                    0      0   100%
+service\es_search_handler.py         139    103    26%   32-88, 131-132, 139-155, 160-173, 178-191, 196-213, 219-254, 259-271, 276-287, 292-304, 309-315
+service\es_util.py                    21     16    24%   5-11, 16-19, 24-35, 40-41
+service\query_builder.py              42     27    36%   21-40, 48-51, 64-83, 89-98, 102-137
+service\status_handler.py             13      2    85%   12, 19
+tests\__init__.py                      0      0   100%
+tests\conftest.py                      8      0   100%
+tests\test_api.py                      9      1    89%   7
+----------------------------------------------------------------
+TOTAL                                334    163    51%
+
 $
 ```
 

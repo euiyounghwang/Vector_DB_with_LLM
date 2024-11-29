@@ -26,6 +26,7 @@ fi
 # pytest -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/
 # python -m  pytest -v ./tests
 
-pytest --cov 
+# pytest --cov 
 # pytest --cov ./tests
 
+pytest -v ./tests --cov-report term-missing --cov
