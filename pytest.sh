@@ -21,4 +21,7 @@ fi
 
 # py.test -v tests
 # poetry run py.test -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/
-python -m  pytest -v ./tests
+poetry run pytest -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/
+
+# pytest -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/
+# python -m  pytest -v ./tests
