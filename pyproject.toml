@@ -32,6 +32,9 @@ pytest-cov = "^6.0.0"
 pyyaml = "^6.0.2"
 jsondiff = "^2.2.1"
 elasticsearch = "7.13"
+python-magic = "^0.4.27"
+python-pptx = "^1.0.2"
+tika = "^2.6.0"
 
 
 [build-system]
