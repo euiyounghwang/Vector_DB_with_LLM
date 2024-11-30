@@ -8,6 +8,7 @@ os.environ['CURL_CA_BUNDLE'] = ''
 
 
 docs_for_test_embed = [
+        ''' type(doc) : <class 'langchain_core.documents.base.Document'> '''
         Document(page_content="사과", metadata=dict(page=1)),
         Document(page_content="애플", metadata=dict(page=1)),
         Document(page_content="바나나", metadata=dict(page=2)),
@@ -26,6 +27,7 @@ docs_for_test_embed = [
 
 def similarity_search_with_score(keyword: str) -> None:
     ''' OpenAIEmbeddings, GoogleGenerativeAIEmbeddings, HuggingFaceEmbeddings, OllamaEmbeddings  '''
+    print(f"type(docs_for_test_embed) : {type(docs_for_test_embed)}")
     embeddings = HuggingFaceEmbeddings(
             model_name="BAAI/bge-m3",
             model_kwargs = {'device': 'cpu'}, # 모델이 CPU에서 실행되도록 설정. GPU를 사용할 수 있는 환경이라면 'cuda'로 설정할 수도 있음
@@ -37,6 +39,7 @@ def similarity_search_with_score(keyword: str) -> None:
     results_with_scores = db.similarity_search_with_score(keyword, k=5)
     print(f"Keyword: {keyword}")
     for doc, score in results_with_scores:
+        print(f"type(doc) : {type(doc)}")
         print(f" > Content: {doc.page_content} / Metadata: {doc.metadata} / Score: {score}({score:.10f})")
         # print(f" > Content: {doc} / Metadata: {doc} / Score: {score}({score:.10f})")
 

@@ -4,6 +4,7 @@ from langchain_community.document_loaders import DirectoryLoader # type: ignore
 from langchain.document_loaders import PyPDFLoader # type: ignore
 from langchain_community.document_loaders import Docx2txtLoader # type: ignore
 from langchain_community.document_loaders import UnstructuredPowerPointLoader # type: ignore
+from langchain_core.documents import Document # type: ignore
 from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignore
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
 ''' split characters  ["\n\n", "\n", " ", ""]'''
@@ -91,7 +92,14 @@ def loader_text(input_file, create_json=False):
         # print(parsed["content"])
         data = parsed["content"]
 
-        return data
+        ''' tranform to type(doc) : <class 'langchain_core.documents.base.Document'>'''
+        transform_lanchain = []
+        for manual_paging, text in enumerate(data.split('\n')):
+            if text:
+                transform_lanchain.append(Document(page_content=str(text), metadata=dict(page=manual_paging)))
+
+        # return data
+        return transform_lanchain
     
 
     def extract_excel_files(input_files):
@@ -179,6 +187,6 @@ if __name__ == "__main__":
     # loader_text("test.txt", create_json=True)
     # loader_text("asiabrief_3-26.pdf", create_json=True)
     # loader_text("Sample.docx", create_json=True)
-    loader_text("Sample.doc", create_json=True)
-    # loader_text("Sample.pptx", create_json=True)
+    # loader_text("Sample.doc", create_json=True)
+    loader_text("Sample.pptx", create_json=True)
     # loader_text("test", create_json=True)
