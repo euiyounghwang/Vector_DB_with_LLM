@@ -185,8 +185,8 @@ def loader_text(input_file, create_json=False):
 if __name__ == "__main__":
     ''' https://velog.io/@kingjiwoo/%EC%B0%B8%EC%A1%B0-%EB%AC%B8%EC%84%9C-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C-LangChain-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B01 '''
     # loader_text("test.txt", create_json=True)
-    # loader_text("asiabrief_3-26.pdf", create_json=True)
+    loader_text("asiabrief_3-26.pdf", create_json=True)
     # loader_text("Sample.docx", create_json=True)
     # loader_text("Sample.doc", create_json=True)
-    loader_text("Sample.pptx", create_json=True)
+    # loader_text("Sample.pptx", create_json=True)
     # loader_text("test", create_json=True)
