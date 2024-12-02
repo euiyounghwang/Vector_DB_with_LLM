@@ -242,6 +242,6 @@ if __name__ == "__main__":
     # loader_text("Sample.pptx", create_json=True)
     # loader_text("test", create_json=True)
     # loader_text("Sample.xls", create_json=True)
-    # loader_text("Sample.hwp", create_json=True)
-    loader_text("https://n.news.naver.com/article/437/0000378416", create_json=True)
+    loader_text("Sample.hwp", create_json=True)
+    # loader_text("https://n.news.naver.com/article/437/0000378416", create_json=True)
     
