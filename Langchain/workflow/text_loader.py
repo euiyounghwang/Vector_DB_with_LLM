@@ -1,7 +1,8 @@
 
 from langchain_community.document_loaders import TextLoader # type: ignore
 from langchain_community.document_loaders import DirectoryLoader # type: ignore
-from langchain.document_loaders import PyPDFLoader # type: ignore
+# from langchain.document_loaders import PyPDFLoader # type: ignore
+from langchain_community.document_loaders import PyPDFLoader # type: ignore
 from langchain_community.document_loaders import Docx2txtLoader # type: ignore
 from langchain_community.document_loaders import UnstructuredPowerPointLoader # type: ignore
 from langchain_community.document_loaders import UnstructuredExcelLoader # type: ignore
@@ -12,6 +13,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignor
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
 ''' split characters  ["\n\n", "\n", " ", ""]'''
 ''' length_function , chunk_size , chunk_overlap, add_start_index (Determines whether to include the start position of the chunk within the original document in the metadata) '''
+
+''' https://python.langchain.com/docs/versions/v0_2/ '''
 
 import json
 import bs4
