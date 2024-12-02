@@ -4,6 +4,9 @@ from langchain_community.document_loaders import DirectoryLoader # type: ignore
 from langchain.document_loaders import PyPDFLoader # type: ignore
 from langchain_community.document_loaders import Docx2txtLoader # type: ignore
 from langchain_community.document_loaders import UnstructuredPowerPointLoader # type: ignore
+from langchain_community.document_loaders import UnstructuredExcelLoader # type: ignore
+from langchain_community.document_loaders import WebBaseLoader # type: ignore
+from langchain_teddynote.document_loaders import HWPLoader # type: ignore
 from langchain_core.documents import Document # type: ignore
 from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignore
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
@@ -11,7 +14,7 @@ from langchain.text_splitter import CharacterTextSplitter # type: ignore
 ''' length_function , chunk_size , chunk_overlap, add_start_index (Determines whether to include the start position of the chunk within the original document in the metadata) '''
 
 import json
-
+import bs4
 import warnings
 warnings.filterwarnings("ignore")
 import os
@@ -52,6 +55,25 @@ def loader_text(input_file, create_json=False):
 
         return data
     
+    def extract_web_url(input_file):
+        ''' Need to check the element in html poge source'''
+        loader = WebBaseLoader(
+            web_paths=(input_file,),
+            bs_kwargs=dict(
+                parse_only=bs4.SoupStrainer(
+                    "div",
+                    attrs={"class": ["newsct_article _article_body", "media_end_head_title"]},
+                )
+            ),
+            header_template={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36",
+            },
+        )
+        data = loader.load()
+        # print(data)
+
+        return data
+    
 
     def extract_pdf_file(input_file):
         ''' https://python.langchain.com/v0.2/docs/how_to/document_loader_pdf/ '''
@@ -82,6 +104,26 @@ def loader_text(input_file, create_json=False):
         return data
     
 
+    def extract_excel_file(input_file):
+        ''' https://python.langchain.com/docs/integrations/document_loaders/microsoft_excel/ '''
+        ''' pip install langchain-community unstructured openpyxl xlrd '''
+        loader = UnstructuredExcelLoader(path + input_file, mode="elements")
+        data = loader.load()
+        print(data)
+
+        return data
+    
+
+    def extract_hwp_file(input_file):
+        ''' https://wikidocs.net/253708 '''
+        ''' pip install langchain-teddynote '''
+        loader = HWPLoader(path + input_file)
+        data = loader.load()
+        print(data)
+
+        return data
+    
+
     def extract_text(input_file):
         ''' Tika: https://github.com/chrismattmann/tika-python '''
         ''' Extract text using tika library'''
@@ -102,10 +144,6 @@ def loader_text(input_file, create_json=False):
         return transform_lanchain
     
 
-    def extract_excel_files(input_files):
-        ''' https://python.langchain.com/docs/integrations/document_loaders/microsoft_excel/ '''
-
-    
     def create_es_json_format(index_name, content):
         ''' make a json format for ES cluster'''
         actions = []
@@ -125,12 +163,17 @@ def loader_text(input_file, create_json=False):
     
 
     print(f'Loading {input_file}')
-    
+
     ''' Validate file extension if it does exist'''
-    if not "." in str(input_file):
+    if "http" in str(input_file):
+        data = extract_web_url(input_file)
+    elif not "." in str(input_file):
         data = extract_txt_file(input_file)
     else:
+        print(f'File: {input_file}')
+
         extension = str(input_file).split(".")[1]
+        print(f'extension: {extension}')
         
         if extension == 'pdf':
             data = extract_pdf_file(input_file)
@@ -144,7 +187,15 @@ def loader_text(input_file, create_json=False):
             # data = extract_pptx_file(input_file)
             data = extract_text(input_file)
             # return ""
-            
+        
+        elif extension.startswith('xls'):
+            data = extract_excel_file(input_file)
+            # data = extract_text(input_file)
+
+        elif extension.startswith('hwp'):
+            data = extract_hwp_file(input_file)
+            # data = extract_text(input_file)
+        
         else:
             data = extract_txt_file(input_file)
             # data = extract_text(input_file)
@@ -185,8 +236,12 @@ def loader_text(input_file, create_json=False):
 if __name__ == "__main__":
     ''' https://velog.io/@kingjiwoo/%EC%B0%B8%EC%A1%B0-%EB%AC%B8%EC%84%9C-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C-LangChain-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B01 '''
     # loader_text("test.txt", create_json=True)
-    loader_text("asiabrief_3-26.pdf", create_json=True)
+    # loader_text("asiabrief_3-26.pdf", create_json=True)
     # loader_text("Sample.docx", create_json=True)
     # loader_text("Sample.doc", create_json=True)
     # loader_text("Sample.pptx", create_json=True)
     # loader_text("test", create_json=True)
+    # loader_text("Sample.xls", create_json=True)
+    # loader_text("Sample.hwp", create_json=True)
+    loader_text("https://n.news.naver.com/article/437/0000378416", create_json=True)
+    
