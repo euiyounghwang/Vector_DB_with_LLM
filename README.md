@@ -150,6 +150,7 @@ pip install requests==2.27.1
 
 ### API Run
 - Start service using `./service-start.sh`
+- FYI) Install library with setup.py like `pip install git+https://github.com/jm/git_pip_install.git`(https://liferecorde.tistory.com/49)
 - Extract text using langchain.document_loaders with tika (`./Langchain/workflow/`)
 ```bash
 curl -X 'POST' \
