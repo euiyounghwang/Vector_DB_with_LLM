@@ -163,6 +163,7 @@ class Search():
     
 
     def buffered_json_doc_to_es(self, raw_json, _index, _type):
+        ''' https://coralogix.com/guides/elasticsearch/elasticsearch-python-index-search-optimize/ '''
         """
         doc = {
             "title": "Elasticsearch Python Demo",
@@ -173,7 +174,7 @@ class Search():
         doc_id = 1
         """
         # response = self.es_client.index(index=_index, _type=_type, id=doc_id, body=doc)
-        response = self.es_client.index(index=_index, _type=_type, id=doc_id, body=doc)
+        response = self.es_client.index(index=_index, _type=_type, body=raw_json)
         print(response)
 
 
