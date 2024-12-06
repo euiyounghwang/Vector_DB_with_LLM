@@ -18,6 +18,7 @@ else
     source $VENV/Scripts/activate
 fi
 
+export PYTHONDONTWRITEBYTECODE=1
 
 # py.test -v tests
 # poetry run py.test -v --junitxml=test-reports/junit/pytest.xml --cov-report html --cov tests/
@@ -29,4 +30,4 @@ fi
 # pytest --cov 
 # pytest --cov ./tests
 
-pytest -v ./tests --cov-report term-missing --cov
+pytest -v ./tests --cov-report term-missing --cov -p no:cacheprovider
