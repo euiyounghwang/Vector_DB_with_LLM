@@ -39,7 +39,7 @@ def loader_text(input_file, create_json=False):
 
     def extract_txt_file(input_file):
         ''' https://python.langchain.com/v0.1/docs/modules/data_connection/document_loaders/ '''
-        loader = TextLoader(path + input_file, encoding="utf-8")
+        loader = TextLoader(input_file, encoding="utf-8")
         data = loader.load()
         # print(data)
         
@@ -81,7 +81,7 @@ def loader_text(input_file, create_json=False):
     def extract_pdf_file(input_file):
         ''' https://python.langchain.com/v0.2/docs/how_to/document_loader_pdf/ '''
         ''' pip install pypdf for pdf file'''
-        loader = PyPDFLoader(path + input_file)
+        loader = PyPDFLoader(input_file)
         data = loader.load_and_split()
         # print(data)
 
@@ -91,7 +91,7 @@ def loader_text(input_file, create_json=False):
     def extract_docx_file(input_file):
         ''' https://python.langchain.com/docs/integrations/document_loaders/microsoft_word/ '''
         ''' pip install docx2txt'''
-        loader = Docx2txtLoader(path + input_file)
+        loader = Docx2txtLoader(input_file)
         data = loader.load_and_split()
         # print(data)
 
@@ -100,7 +100,7 @@ def loader_text(input_file, create_json=False):
 
     def extract_pptx_file(input_file):
         ''' pip install unstructured python-magic python-pptx '''
-        loader = UnstructuredPowerPointLoader(path + input_file)
+        loader = UnstructuredPowerPointLoader(input_file)
         data = loader.load()
         print(data)
 
@@ -110,7 +110,7 @@ def loader_text(input_file, create_json=False):
     def extract_excel_file(input_file):
         ''' https://python.langchain.com/docs/integrations/document_loaders/microsoft_excel/ '''
         ''' pip install langchain-community unstructured openpyxl xlrd '''
-        loader = UnstructuredExcelLoader(path + input_file, mode="elements")
+        loader = UnstructuredExcelLoader(input_file, mode="elements")
         data = loader.load()
         print(data)
 
@@ -120,7 +120,7 @@ def loader_text(input_file, create_json=False):
     def extract_hwp_file(input_file):
         ''' https://wikidocs.net/253708 '''
         ''' pip install langchain-teddynote '''
-        loader = HWPLoader(path + input_file)
+        loader = HWPLoader(input_file)
         data = loader.load()
         print(data)
 
@@ -132,7 +132,7 @@ def loader_text(input_file, create_json=False):
         ''' Extract text using tika library'''
         import tika # type: ignore
         from tika import parser # type: ignore
-        parsed = parser.from_file(path + input_file)
+        parsed = parser.from_file(input_file)
         # print(parsed["metadata"])
         # print(parsed["content"])
         data = parsed["content"]
@@ -175,7 +175,9 @@ def loader_text(input_file, create_json=False):
     else:
         print(f'File: {input_file}')
 
-        extension = str(input_file).split(".")[1]
+        split_extension = str(input_file).rsplit(".",1)
+        print(f'split_extension: {split_extension}')
+        extension =split_extension[1]
         print(f'extension: {extension}')
         
         if extension == 'pdf':
@@ -238,13 +240,13 @@ def loader_text(input_file, create_json=False):
 
 if __name__ == "__main__":
     ''' https://velog.io/@kingjiwoo/%EC%B0%B8%EC%A1%B0-%EB%AC%B8%EC%84%9C-%EA%B8%B0%EB%B0%98%EC%9C%BC%EB%A1%9C-LangChain-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B01 '''
-    # loader_text("test.txt", create_json=True)
-    # loader_text("asiabrief_3-26.pdf", create_json=True)
-    # loader_text("Sample.docx", create_json=True)
-    # loader_text("Sample.doc", create_json=True)
-    # loader_text("Sample.pptx", create_json=True)
-    # loader_text("test", create_json=True)
-    # loader_text("Sample.xls", create_json=True)
-    loader_text("Sample.hwp", create_json=True)
+    # loader_text("{}/{}".format(path, "test.txt"), create_json=True)
+    # loader_text("{}/{}".format(path, "asiabrief_3-26.pdf"), create_json=True)
+    # loader_text("{}/{}".format(path, "Sample.docx"), create_json=True)
+    # loader_text("{}/{}".format(path, "Sample.doc"), create_json=True)
+    # loader_text("{}/{}".format(path, "Sample.pptx"), create_json=True)
+    # loader_text("{}/{}".format(path, "test"), create_json=True)
+    # loader_text("{}/{}".format(path, "Sample.xls"), create_json=True)
+    loader_text("{}/{}".format(path, "Sample.hwp"), create_json=True)
     # loader_text("https://n.news.naver.com/article/437/0000378416", create_json=True)
     
