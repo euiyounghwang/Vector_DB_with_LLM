@@ -1,0 +1,32 @@
+POST _analyze
+{
+  "tokenizer":      "keyword", 
+  "char_filter":  [ "html_strip" ],
+  "text": "<p>I&apos;m so <b>happy</b>!</p>"
+}
+
+POST _analyze
+{
+  "analyzer": "whitespace",
+  "text":     "The quick brown fox."
+}
+
+POST _analyze
+{
+  "tokenizer": "letter",
+  "text": "한국의 음식 The 2 Q#UICK ex.mba Brown-Foxes jumped over the lazy dog's bone."
+}
+
+POST _analyze
+{
+  "tokenizer": "standard",
+  "text": "The 2 Q#UICK ex.mba Brown-Foxes jumped over the lazy dog's bone."
+}
+
+
+POST _analyze
+{
+  "tokenizer": "whitespace",
+  "filter":  [ "lowercase", "asciifolding" ],
+  "text":      "Is this déja vu?"
+}
