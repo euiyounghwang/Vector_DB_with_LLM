@@ -234,7 +234,11 @@ def loader_text(input_file, create_json=False):
 
     ''' any indexing into es'''
     print(f"Progressing..")
+    if not create_json:
+        print("\n", content)
+        return content
     return create_es_json_format("test_context", content)
+    
     
 
 
