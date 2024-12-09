@@ -41,11 +41,6 @@ POST _analyze
 
 GET _cat/indices
 
-GET posco_autokeyword1/_analyze
-{
-  "text": "18일 LG 는 히메네스를 퇴출하고 새 외국인 타자 영입을 발표했다. 새로운 용병 타자로 제임스 로니와 35만 달러에 입단 계약을 체결했다.",
-  "analyzer": "korean_mecab"
-}
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-charfilters.html
 # HTML Strip Character Filter

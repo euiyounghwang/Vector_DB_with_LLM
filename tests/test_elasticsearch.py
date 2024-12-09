@@ -1,6 +1,7 @@
 import pytest
 from elasticsearch.client import Elasticsearch, IndicesClient # type: ignore
 import json
+from injector import es_version
 
 
 
@@ -33,13 +34,28 @@ def test_elasticsearch(mock_es_client):
     
     try_delete_index("test_ngram_v1")
     
-    create_index("test_ngram_v1", "/test_mapping/search_ngram_mapping.json")
+    ''' es v.5'''
+    if '5.' in es_version['version']['number']:
+        create_index("test_ngram_v1", "/test_mapping/search_ngram_mapping.json")
+    
+    elif '8.' in es_version['version']['number']:
+        ''' es v.8'''
+        create_index("test_ngram_v1", "/test_mapping/search_ngram_mapping_v8.json")
 
     # ngram index
-    es.index(index="test_ngram_v1", doc_type="props", id=111, body={
-            "title": " The quick brown fox jumps over the lazy dog"
-        }
-    )
+    ''' es v.5'''
+    if '5.' in es_version['version']['number']:
+        es.index(index="test_ngram_v1", doc_type="props", id=111, body={
+                "title": " The quick brown fox jumps over the lazy dog"
+            }
+        )
+
+    elif '8.' in es_version['version']['number']:
+        ''' es v.8'''
+        es.index(index="test_ngram_v1", id=111, body={
+                "title": " The quick brown fox jumps over the lazy dog"
+            }
+        )
 
     def create_alias(index, name):
         ic.put_alias(index, name)

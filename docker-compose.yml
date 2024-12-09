@@ -16,16 +16,54 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
       
-      
-  fn-cicd-basic-omni_es:
-    image: fn-cicd-basic-api:omni_es
-    container_name: fn-cicd-basic-omni_es
+  fn-es8:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: fn-es8
+    environment:
+      - http.host=0.0.0.0
+      - node.name=fn-dm-bees-omni-data-01
+      - node.roles=[data, master]
+      - cluster.name=docker-elasticsearch
+      - cluster.initial_master_nodes=fn-dm-bees-omni-data-01
+      - discovery.seed_hosts=fn-dm-bees-omni-data-01
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.license.self_generated.type=basic
+      - action.destructive_requires_name=false
+      - http.port=9202
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9202:9202
+    networks:
+      - bridge
+
+  fn-kibana8:
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    container_name: fn-kibana8
+    environment:
+     ELASTICSEARCH_HOSTS: http://fn-es8:9202
+     SERVER_HOSTS: 0.0.0.0
+    ports:
+      - 25601:5601
+    networks:
+      - bridge    
+    depends_on:
+      - fn-es8
+
+  fn-vector-omni_es_8:
+    image: fn-vector-omni_es_8:omni_es
+    container_name: fn-vector-omni_es_8
     build:
       context: .
       dockerfile: Dockerfile
       target: omni_es
     ports:
-      - 9203:9201
+      - 9202:9202
     # restart: unless-stopped
     environment:
       # v_7
@@ -53,14 +91,14 @@ services:
       - xpack.security.http.ssl.enabled=false
       - xpack.license.self_generated.type=basic
       - action.destructive_requires_name=false
-      - http.port=9201
+      - http.port=9202
       - reindex.remote.whitelist=${NODE_WHITE_LIST}
     volumes:
       - data:/usr/share/elasticsearch/data
       - ./Docker/elasticsearch/backup:/usr/share/elasticsearch/backup
       - ./Docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     healthcheck:
-      test: ["CMD", "curl","-s" ,"-f", "http://localhost:9201/_cat/health"]
+      test: ["CMD", "curl","-s" ,"-f", "http://localhost:9202/_cat/health"]
     networks:
       - bridge
   
@@ -73,9 +111,9 @@ services:
     networks:
       - bridge
     depends_on:
-      - fn-vector-basic-omni_es
+      - fn-vector-omni_es_8
     environment:
-      ELASTICSEARCH_HOSTS: http://fn-vector-basic-omni_es:9201
+      ELASTICSEARCH_HOSTS: http://fn-vector-omni_es_8:9202
   
       
   fn-vector-basic-api:

@@ -35,6 +35,7 @@ doc = read_config_yaml()
 ''' Get es host name from environment or read_yaml function '''
 ES_HOST = os.getenv("ES_HOST", doc['app']['es']['es_host'])
 es_client = Elasticsearch(hosts= ES_HOST, headers=get_headers(), verify_certs=False, timeout=600)
+es_version = es_client.info()
 
 
 SearchAPIHandlerInject = SearchAPIHandler(logger)

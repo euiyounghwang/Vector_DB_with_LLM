@@ -1,6 +1,6 @@
 
 import pytest
-
+from injector import doc, ES_HOST, es_version
 
 @pytest.mark.skip(reason="no way of currently testing this")
 def test_skip():
@@ -19,7 +19,9 @@ def test_api(mock_client):
 
 # @pytest.mark.skip(reason="no way of currently testing this")
 def test_es_api(mock_client):
-    response = mock_client.get("/cluster/health?es_url=http://localhost:9201")
+    print(doc)
+    print(es_version)
+    response = mock_client.get("/cluster/health?es_url={}".format(ES_HOST))
     assert response is not None
     assert response.status_code == 200
     assert 'cluster_name' in response.json()

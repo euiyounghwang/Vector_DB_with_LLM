@@ -1,0 +1,66 @@
+{
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0,
+      "max_ngram_diff": 30,
+      "analysis": {
+        "analyzer": {
+          "autocomplete": {
+            "type": "custom",
+            "tokenizer": "autocomplete",
+            "filter": [
+              "lowercase",
+              "stop",
+              "snowball"
+            ]
+          },
+          "autocomplete_search": {
+            "tokenizer": "lowercase"
+          }
+        },
+        "tokenizer": {
+          "autocomplete": {
+            "type": "edge_ngram",
+            "min_gram": 2,
+            "max_gram": 20,
+            "token_chars": [
+              "letter",
+              "digit"
+            ]
+          },
+          "autocomplete_whitespace": {
+            "type": "edge_ngram",
+            "min_gram": 2,
+            "max_gram": 20,
+            "token_chars": [
+              "letter",
+              "whitespace"
+            ]
+          },
+          "ngram_tokenizer": {
+            "token_chars": [
+              "letter",
+              "digit",
+              "punctuation"
+            ],
+            "min_gram": "2",
+            "type": "ngram",
+            "max_gram": "20"
+          }
+        }
+      }
+    },
+    "mappings": {
+        "properties": {
+            "title": {
+            "type": "text",
+            "analyzer": "autocomplete",
+            "search_analyzer": "autocomplete_search"
+        },
+        "content": {
+            "type": "text",
+            "index_options": "offsets"
+        }
+     }
+   }
+}

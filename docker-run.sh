@@ -20,7 +20,7 @@ SCRIPTDIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 #   fn-platform-basic-api:omni_es
 
 # V.8
-docker run --rm -it -d --publish 9203:9201 --expose 9201 \
+docker run --rm -it -d --publish 9202:9201 --expose 9201 \
   --name fn-platform-omni-data-01 \
   -e node.roles="[data, master]" \
   -e node.name=fn-platform-omni-data-01 \
@@ -35,7 +35,7 @@ docker run --rm -it -d --publish 9203:9201 --expose 9201 \
   -e xpack.license.self_generated.type=basic \
   -e action.destructive_requires_name=false \
   -v "$SCRIPTDIR:/FN-BEES-Services/" \
-  fn-platform-basic-api:omni_es
+  fn-vector-omni_es_8:omni_es
   
 
 # docker run --rm --platform linux/amd64 -it -d \

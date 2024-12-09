@@ -30,4 +30,5 @@ export PYTHONDONTWRITEBYTECODE=1
 # pytest --cov 
 # pytest --cov ./tests
 
+# pytest -sv ./tests --cov-report term-missing --cov -p no:cacheprovider
 pytest -v ./tests --cov-report term-missing --cov -p no:cacheprovider
