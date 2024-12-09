@@ -33,7 +33,7 @@ def loader_text(input_file, create_json=False):
     ''' chunking before saving text into vector store'''
 
     content = []
-    json_format = {"ES_UPLOADED" : "JSON_FORMAT"}
+    json_format = {"_source" : {"ES_UPLOADED" : "JSON_FORMAT"}}
 
     _chunk_size = 200
 
@@ -154,7 +154,7 @@ def loader_text(input_file, create_json=False):
         # print("Full context : {}".format('\n'.join(content)))
 
         actions.append({'index': {'_index': index_name, '_type' : "search"}})
-        json_format.update({"CONTENT" : '\n'.join(content)})
+        json_format.update({"_source" : {"CONTENT" : '\n'.join(content)}})
         actions.append(json_format)
 
         print(json.dumps(actions, indent=2, ensure_ascii=False))

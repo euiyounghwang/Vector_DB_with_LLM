@@ -188,18 +188,22 @@ class Search():
         # [{'_index': 'recommendation_test', '_id': 'cLOXEosBDeViDjrDAL8Z', '_score': 1.0, '_source': {'intern': 'Richard', 'grade': 'bad', 'type': 'grade'}},
         ...]
         '''
-        logging.info("buffered_json_to_es Loading..")
+        logging.info("buffered_json_to_es Loading.. {}".format(json.dumps(raw_json, indent=2, ensure_ascii=False)))
         
         try:
             
             for each_raw in raw_json:
 
+                if "_source" not in each_raw:
+                    continue
+
                 ''' ES v.5 header'''
                 # _header = {'index': {'_index': _index, '_type' : _type, "_id" : each_raw['_id'], "op_type" : "create"}}
+                _header = {'index': {'_index': _index, '_type' : _type}}
                 
                 ''' When indexing with ES v.8, _type is deleted and must be excluded. '''
                 ''' So, when indexing with ES v.8, spark job also needs to remove the _type field.'''
-                _header = {'index': {'_index': _index, "_id" : each_raw['_id']}}
+                # _header = {'index': {'_index': _index, "_id" : each_raw['_id']}}
                 # _header = {'index': {'_index': _index, "_id" : each_raw['_id'], "op_type" : "create"}}
                 # self.actions.append({'index': {'_index': _index, "_id" : each_raw['_id'], "op_type" : "create"}})
                 
@@ -249,16 +253,14 @@ class Search():
             # --
             # Index for the remain Dataset
             # --
-            '''
-            if len(actions) > 0:
-                response = self.es_client.bulk(body=actions)
+            if len(self.actions) > 0:
+                response = self.es_client.bulk(body=self.actions)
                 
                 if response['errors'] == 'true':
                     logging.error(response)
                 else:
                     logging.info("** remain indexing ** : {}".format(len(response['items'])))
-                    del actions[:]
-            '''        
+                    del self.actions[:]
             
             # --
             # refresh
