@@ -1,0 +1,211 @@
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+# -- analyze --
+POST _analyze
+{
+  "tokenizer":      "keyword", 
+  "char_filter":  [ "html_strip" ],
+  "text": "<p>I&apos;m so <b>happy</b>!</p>"
+}
+
+POST _analyze
+{
+  "analyzer": "whitespace",
+  "text":     "The quick brown fox."
+}
+
+POST _analyze
+{
+  "tokenizer": "letter",
+  "text": "한국의 음식 The 2 Q#UICK ex.mba Brown-Foxes jumped over the lazy dog's bone."
+}
+
+POST _analyze
+{
+  "tokenizer": "standard",
+  "text": "The 2 Q#UICK ex.mba Brown-Foxes jumped over the lazy dog's bone."
+}
+
+
+POST _analyze
+{
+  "tokenizer": "whitespace",
+  "filter":  [ "lowercase", "asciifolding" ],
+  "text":      "Is this déja vu?"
+}
+
+GET _cat/indices
+
+GET posco_autokeyword1/_analyze
+{
+  "text": "18일 LG 는 히메네스를 퇴출하고 새 외국인 타자 영입을 발표했다. 새로운 용병 타자로 제임스 로니와 35만 달러에 입단 계약을 체결했다.",
+  "analyzer": "korean_mecab"
+}
+
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-charfilters.html
+# HTML Strip Character Filter
+# Mapping Character Filter
+# Pattern Replace Character Filter
+POST _analyze
+{
+  "tokenizer": "standard",
+  "filter": [
+    "lowercase",
+    "asciifolding"
+  ],
+  "char_filter": [
+    "html_strip"
+  ],
+  "text": "<bh>Is this déja vu?</b>"
+}
+
+# -- analyze --
+
+GET test_ngram_v1/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET test_ngram_v1/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "fields": [
+              "*"
+            ],
+            "query": "native",
+            "lenient": true
+          }
+        }
+      ]
+    }
+  },
+  "highlight": {
+    "order": "score",
+    "pre_tags": [
+      "<b>"
+    ],
+    "post_tags": [
+      "</b>"
+    ],
+    "fields": {
+      "*": {
+        "number_of_fragments": 1,
+        "type": "unified",
+        "fragment_size": 150
+      }
+    }
+  }
+}
+
+GET test_ngram_v1/props/222/_termvectors?fields=FILE
+
+GET test_ngram_v1/props/222/_termvectors?fields=FILE.keyword
+
+
+# ****************
+# ****************
+# ****************
+
+DELETE my-index-01
+
+GET my-index-01
+
+PUT my-index-01
+{
+  "mappings": {
+    "props": {
+      "properties": {
+        "text": {
+          "type": "text",
+          "index_options": "offsets"
+        },
+        "without_text": {
+          "type": "text"
+        },
+        "no_text": {
+          "type": "text",
+          "index": false
+        }
+      }
+    }
+  }
+}
+
+PUT my-index-01/props/1
+{
+  "text": "Quick brown fox",
+  "without_text" : "Quick brown fox",
+  "no_text" : "Quick brown fox"
+}
+
+GET my-index-01/_search
+{
+  "query": {
+    "match": {
+      "text": "brown fox"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "text": {} 
+    }
+  }
+}
+
+GET my-index-01/_search
+{
+  "query": {
+    "match_phrase": {
+      "text": "quick brown"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "*": {} 
+    }
+  }
+}
+
+GET my-index-01/_search
+{
+  "query": {
+    "match_phrase": {
+      "without_text": "quick brown"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "*": {} 
+    }
+  }
+}
+
+GET my-index-01/_search
+{
+  "query": {
+    "match_phrase": {
+      "no_text": "quick brown"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "*": {} 
+    }
+  }
+}
+
+GET my-index-01/_termvectors/1?fields=text
+GET my-index-01/_termvectors/1?fields=without_text
+GET my-index-01/_termvectors/1?fields=no_text
+

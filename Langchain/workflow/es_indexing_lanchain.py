@@ -28,7 +28,8 @@ if __name__ == "__main__":
         '''
         
         # raw_json_list = loader_text("{}/{}".format(path, "Sample.hwp"), create_json=True)
-        raw_json_list = loader_text("{}/{}".format(path, "Sample.pptx"), create_json=True)
+        # raw_json_list = loader_text("{}/{}".format(path, "Sample.pptx"), create_json=True)
+        raw_json_list = loader_text("{}/{}".format(path, "Sample.docx"), create_json=True)
 
         ''' Loading json-format if create_json is False'''
         # loader_text("{}/{}".format(path, "Sample.hwp"))

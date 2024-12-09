@@ -147,14 +147,15 @@ def loader_text(input_file, create_json=False):
         return transform_lanchain
     
 
-    def create_es_json_format(index_name, content):
+    def create_es_json_format(index_name, input_file, content):
         ''' make a json format for ES cluster'''
         actions = []
         print('\n')
         # print("Full context : {}".format('\n'.join(content)))
 
         actions.append({'index': {'_index': index_name, '_type' : "search"}})
-        json_format.update({"_source" : {"CONTENT" : '\n'.join(content)}})
+        json_format.update({"_source" : {"CONTENT" : '\n'.join(content), "FILE" : input_file}})
+        json_format.update({"_id" : "222"})
         actions.append(json_format)
 
         print(json.dumps(actions, indent=2, ensure_ascii=False))
@@ -237,7 +238,7 @@ def loader_text(input_file, create_json=False):
     if not create_json:
         print("\n", content)
         return content
-    return create_es_json_format("test_context", content)
+    return create_es_json_format("test_context", input_file, content)
     
     
 

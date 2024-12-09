@@ -197,9 +197,11 @@ class Search():
                 if "_source" not in each_raw:
                     continue
 
+                # _id = each_raw['_id'] if "_id" in each_raw else "222"
+
                 ''' ES v.5 header'''
                 # _header = {'index': {'_index': _index, '_type' : _type, "_id" : each_raw['_id'], "op_type" : "create"}}
-                _header = {'index': {'_index': _index, '_type' : _type}}
+                _header = {'index': {'_index': _index, '_type' : _type, '_id' : each_raw['_id']}}
                 
                 ''' When indexing with ES v.8, _type is deleted and must be excluded. '''
                 ''' So, when indexing with ES v.8, spark job also needs to remove the _type field.'''
