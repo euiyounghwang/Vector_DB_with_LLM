@@ -138,6 +138,7 @@ def loader_text(input_file, create_json=False):
         data = parsed["content"]
 
         ''' tranform to type(doc) : <class 'langchain_core.documents.base.Document'>'''
+        ''' refering to https://hyundoil.tistory.com/295'''
         transform_lanchain = []
         for manual_paging, text in enumerate(data.split('\n')):
             if text:
