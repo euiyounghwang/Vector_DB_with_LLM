@@ -8,6 +8,7 @@ import os
 os.environ['CURL_CA_BUNDLE'] = ''
 import shutil
 import json
+import pandas as pd
 
 path = os.getcwd() + "/chroma_data"
 
@@ -84,7 +85,13 @@ class vector_store_chroma:
 
     def get_vector_store_chroma(self):
         print('get_vector_store_chroma : {}'.format(json.dumps(self.database.get(), indent=2, ensure_ascii=False)))
+        print('\n')
+        data = self.database.get()
+        data = pd.DataFrame(data)
+        print(data.head())
+
         return self.database.get()
+        
 
 
 if __name__ == "__main__":
@@ -121,9 +128,9 @@ if __name__ == "__main__":
         # faiss_vector_store.similarity_search_with_score("해")
 
         ''' chroma'''
-        chroma_vector_store = vector_store_chroma(reset_db=True)
+        chroma_vector_store = vector_store_chroma(reset_db=False)
         input_list = ['test 데이터 입력1', 'test 데이터 입력2']
-        chroma_vector_store.similarity_search_with_score(input_list)
+        # chroma_vector_store.similarity_search_with_score(input_list)
         chroma_vector_store.get_vector_store_chroma()
 
     except Exception as e:
