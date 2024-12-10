@@ -178,7 +178,7 @@ class Search():
         print(response)
 
 
-    def buffered_json_to_es(self, raw_json, _index, _type):
+    def buffered_json_to_es(self, raw_json, _index, _type=None):
         ''' https://opster.com/guides/elasticsearch/how-tos/optimizing-elasticsearch-bulk-indexing-high-performance/ '''
         ''' To further improve bulk indexing performance, you can use multiple threads or processes to send bulk requests concurrently. This can help you utilize the full capacity of your Elasticsearch cluster and reduce the time it takes to index large datasets.'''
         ''' When using multiple threads or processes, make sure to monitor the performance and resource usage of your Elasticsearch cluster. '''
@@ -201,7 +201,11 @@ class Search():
 
                 ''' ES v.5 header'''
                 # _header = {'index': {'_index': _index, '_type' : _type, "_id" : each_raw['_id'], "op_type" : "create"}}
-                _header = {'index': {'_index': _index, '_type' : _type, '_id' : each_raw['_id']}}
+                if _type:
+                    _header = {'index': {'_index': _index, '_type' : _type, '_id' : each_raw['_id']}}
+                else:
+                    ''' ES v.8 header'''
+                    _header = {'index': {'_index': _index, '_id' : each_raw['_id']}}
                 
                 ''' When indexing with ES v.8, _type is deleted and must be excluded. '''
                 ''' So, when indexing with ES v.8, spark job also needs to remove the _type field.'''
