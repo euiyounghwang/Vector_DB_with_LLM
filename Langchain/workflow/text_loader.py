@@ -1,4 +1,5 @@
 
+from typing import List
 from langchain_community.document_loaders import TextLoader # type: ignore
 from langchain_community.document_loaders import DirectoryLoader # type: ignore
 # from langchain.document_loaders import PyPDFLoader # type: ignore
@@ -18,6 +19,7 @@ from langchain.text_splitter import CharacterTextSplitter # type: ignore
 
 import json
 import bs4
+import re
 import warnings
 warnings.filterwarnings("ignore")
 import os
@@ -37,6 +39,16 @@ def loader_text(input_file, create_json=False):
 
     _chunk_size = 200
 
+    def remove_newlines_except_after_period(text):
+        """마침표 다음의 줄바꿈을 제외한 모든 줄바꿈을 제거"""
+        return re.sub(r'(?<!\.)(\n|\r\n)(\s+)', ' ', text)
+    
+
+    def process_pages(pages: List[Document]) -> List[Document]:
+      return [Document(page_content=remove_newlines_except_after_period(page.page_content), metadata=page.metadata) for page in pages]
+
+
+
     def extract_txt_file(input_file):
         ''' https://python.langchain.com/v0.1/docs/modules/data_connection/document_loaders/ '''
         loader = TextLoader(input_file, encoding="utf-8")
@@ -55,6 +67,10 @@ def loader_text(input_file, create_json=False):
         )
         '''
         data = loader.load()
+
+        ''' preprocessing for Document '''
+        data = process_pages(data)
+        # print(data)
 
         return data
     
@@ -83,6 +99,9 @@ def loader_text(input_file, create_json=False):
         ''' pip install pypdf for pdf file'''
         loader = PyPDFLoader(input_file)
         data = loader.load_and_split()
+
+        ''' preprocessing for Document '''
+        data = process_pages(data)
         # print(data)
 
         return data
@@ -93,6 +112,9 @@ def loader_text(input_file, create_json=False):
         ''' pip install docx2txt'''
         loader = Docx2txtLoader(input_file)
         data = loader.load_and_split()
+
+        ''' preprocessing for Document '''
+        data = process_pages(data)
         # print(data)
 
         return data
@@ -112,6 +134,9 @@ def loader_text(input_file, create_json=False):
         ''' pip install langchain-community unstructured openpyxl xlrd '''
         loader = UnstructuredExcelLoader(input_file, mode="elements")
         data = loader.load()
+
+        ''' preprocessing for Document '''
+        data = process_pages(data)
         print(data)
 
         return data
@@ -122,9 +147,13 @@ def loader_text(input_file, create_json=False):
         ''' pip install langchain-teddynote '''
         loader = HWPLoader(input_file)
         data = loader.load()
-        print(data)
+
+        ''' preprocessing for Document '''
+        data = process_pages(data)
+        # print(data, type(data))
 
         return data
+       
     
 
     def extract_text(input_file):
@@ -144,9 +173,11 @@ def loader_text(input_file, create_json=False):
             if text:
                 transform_lanchain.append(Document(page_content=str(text), metadata=dict(page=manual_paging)))
 
-        # return data
-        return transform_lanchain
-    
+        ''' preprocessing for Document '''
+        data = process_pages(transform_lanchain)
+
+        return data
+        
 
     def create_es_json_format(index_name, input_file, content):
         ''' make a json format for ES cluster'''
