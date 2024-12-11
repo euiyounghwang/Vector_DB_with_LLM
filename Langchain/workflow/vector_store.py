@@ -38,6 +38,7 @@ class vector_store_faiss:
                 encode_kwargs = {'normalize_embeddings': True}, # 임베딩 정규화. 모든 벡터가 같은 범위의 값을 갖도록 함. 유사도 계산 시 일관성을 높여줌
         )
         self.database = FAISS.from_documents(self.docs_for_test_embed, self.embeddings)
+        self.MY_FAISS_INDEX = "MY_FAISS_INDEX"
 
         # if os.path.exists(self.path):
         #     shutil.rmtree(self.path)
@@ -45,8 +46,19 @@ class vector_store_faiss:
 
     def export_vector(self):
         ''' saved vector in local env'''
-        MY_FAISS_INDEX = "MY_FAISS_INDEX"
-        self.database.save_local(self.path + "/" + MY_FAISS_INDEX)
+        ''' https://velog.io/@kwon0koang/%EB%A1%9C%EC%BB%AC%EC%97%90%EC%84%9C-Llama3-%EB%8F%8C%EB%A6%AC%EA%B8%B0 '''
+        
+        self.database.save_local(self.path + "/" + self.MY_FAISS_INDEX)
+
+
+    def import_vector(self):
+        ''' import vector '''
+        ''' https://velog.io/@kwon0koang/%EB%A1%9C%EC%BB%AC%EC%97%90%EC%84%9C-Llama3-%EB%8F%8C%EB%A6%AC%EA%B8%B0 '''
+
+        self.database = FAISS.load_local(self.path + "/" + self. MY_FAISS_INDEX,  self.embeddings, allow_dangerous_deserialization=True)
+        retriever = self.database.as_retriever(search_type="similarity", search_kwargs={"k": 5}) # 유사도 높은 5문장 추출
+        retrieved_docs = retriever.invoke("라마3")
+        print(retrieved_docs)
 
 
     def similarity_search_with_score(self, keyword: str) -> None:
