@@ -43,6 +43,12 @@ class vector_store_faiss:
         #     shutil.rmtree(self.path)
 
 
+    def export_vector(self):
+        ''' saved vector in local env'''
+        MY_FAISS_INDEX = "MY_FAISS_INDEX"
+        self.database.save_local(MY_FAISS_INDEX)
+
+
     def similarity_search_with_score(self, keyword: str) -> None:
         ''' OpenAIEmbeddings, GoogleGenerativeAIEmbeddings, HuggingFaceEmbeddings, OllamaEmbeddings  '''
         print(f"type(docs_for_test_embed) : {type(self.docs_for_test_embed)}")
