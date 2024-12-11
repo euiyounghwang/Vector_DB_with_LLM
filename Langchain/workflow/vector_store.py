@@ -46,7 +46,7 @@ class vector_store_faiss:
     def export_vector(self):
         ''' saved vector in local env'''
         MY_FAISS_INDEX = "MY_FAISS_INDEX"
-        self.database.save_local(MY_FAISS_INDEX)
+        self.database.save_local(self.path + "/" + MY_FAISS_INDEX)
 
 
     def similarity_search_with_score(self, keyword: str) -> None:
