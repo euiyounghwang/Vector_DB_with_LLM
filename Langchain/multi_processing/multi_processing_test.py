@@ -80,6 +80,8 @@ def work():
 
 
 if __name__ == '__main__':
+    ''' https://hhj6212.github.io/programming/python/2021/04/18/python-multi.html '''
+    ''' ThreadPoolExecutor / ProcessPoolExecutor'''
 #    work1()
 #    work2()
     work()
