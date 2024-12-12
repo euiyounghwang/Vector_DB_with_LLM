@@ -19,6 +19,14 @@ fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
+#  -- core
+# grep -c processor /proc/cpuinfo
+
+# The number of worker on gunicorn
+# master prcess/worker process (creation via fork)
+# https://sonnson.tistory.com/6
+# (2~4) x $(NUM_CORES)
+
 python -m uvicorn main:app --reload --host=0.0.0.0 --port=7001 --workers 1
 # gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:8001 --workers 4
 # poetry run uvicorn main:app --reload --host=0.0.0.0 --port=8001 --workers 4

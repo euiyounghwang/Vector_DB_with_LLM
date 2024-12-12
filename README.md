@@ -28,6 +28,27 @@ RAG(Retrieval Augemented Generation) is an AI technique that allows companies to
 - RAG can’t do its job without the vector database doing its job.
 - Step (https://blog.naver.com/htk1019/223442628204) : Document Loader ⮕ Text Splitter ⮕ Embedding ⮕ Vector Store (Saving vector) ⮕ Retriver
 
+
+Apache Flink : Apache Kafka and Apache Flink are two powerful tools in big data and stream processing. While Kafka is known for its robust messaging system, Flink is good in real-time stream processing and analytics.
+- Apache Kafka : Distributed streaming platform, Messaging system for real-time data streams, Publish-subscribe messaging system, Topic/Producer/Consumer
+- Apache Flink : Distributed stream processing framework, Stream processing and analytics, Event-driven/real-time stream processing, DataStream/Stream Processing/Windowing (https://medium.com/@priyankbhandia_24919/apache-flink-for-data-enrichment-6118d48de04, https://yenaworldblog.wordpress.com/2018/06/20/flink-install-%EC%84%A4%EC%B9%98/, https://medium.com/@aaron.cpsh/designing-streaming-data-pipeline-with-apache-flink-and-kafka-a75c75d55918)
+  - Apache Flink is a framework and distributed processing engine for stateful computations over bounded and unbounded data streams. Bounded data streams can be thought of as batch processing and unbounded data streams can be thought of as stream processing as conventionally discussed
+  - PyFlink is a Python API for Apache Flink. It allows users to write Flink programs in Python and execute them on a Flink cluster.
+  - Sources and sinks can be retrieved from various sources:
+    - Filesystem (source/sink)
+    - Apache Kafka (source/sink)
+    - Apache Cassandra (sink)
+    - Amazon Kinesis Streams (source/sink)
+    - Elasticsearch (sink)
+    - Hadoop FileSystem (sink)
+    - RabbitMQ (source/sink)
+    - Apache NiFi (source/sink)
+    - Twitter Streaming API (source)
+    - Google PubSub (source/sink)
+    - JDBC (sink)
+  - Kafka ~ Flink : https://thingsolver.com/blog/streaming-analytics-in-banking-how-to-start-with-apache-flink-and-kafka-in-7-steps/, https://github.com/apache/flink/blob/master/flink-python/pyflink/examples/datastream/connectors/elasticsearch.py, https://github.com/apache/flink/blob/master/flink-python/pyflink/examples/datastream/connectors/kafka_json_format.py
+
+
 Streamlit is an open-source Python framework for data scientists and AI/ML engineers to deliver interactive data apps
 - https://github.com/streamlit/llm-examples, https://pypi.org/project/streamlit-chat/
 - Streamlit Install & Run
