@@ -30,6 +30,19 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 
 path = os.getcwd() + "/Data/"
 
+
+def remove_newlines_except_after_period(text):
+    """remove unnecessary characters"""
+    replace = re.sub(r'(?<!\.)(\n|\r\n)', ' ', text)
+    replace = re.sub(r' +', ' ', replace)
+
+    return replace
+    
+
+def process_pages(pages: List[Document]) -> List[Document]:
+    return [Document(page_content=remove_newlines_except_after_period(page.page_content), metadata=page.metadata) for page in pages]
+
+
 def loader_text(input_file, create_json=False):
     ''' multiple files for *.txt or *.pdf using DirectoryLoader or PyPDFDirectoryLoaderusing'''
     ''' chunking before saving text into vector store'''
@@ -38,16 +51,6 @@ def loader_text(input_file, create_json=False):
     json_format = {"_source" : {"ES_UPLOADED" : "JSON_FORMAT"}}
 
     _chunk_size = 200
-
-    def remove_newlines_except_after_period(text):
-        """마침표 다음의 줄바꿈을 제외한 모든 줄바꿈을 제거"""
-        return re.sub(r'(?<!\.)(\n|\r\n)(\s+)', ' ', text)
-    
-
-    def process_pages(pages: List[Document]) -> List[Document]:
-      return [Document(page_content=remove_newlines_except_after_period(page.page_content), metadata=page.metadata) for page in pages]
-
-
 
     def extract_txt_file(input_file):
         ''' https://python.langchain.com/v0.1/docs/modules/data_connection/document_loaders/ '''

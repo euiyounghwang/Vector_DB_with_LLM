@@ -1,6 +1,7 @@
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignore
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
+from text_loader import remove_newlines_except_after_period
 
 
 some_text = """When writing documents, writers will use document structure to group content. \
@@ -19,17 +20,19 @@ def recursive():
         separators=["\n\n", "\n", " ", ""]
     )
 
-    print(r_splitter.split_text(some_text))
+    # print(r_splitter.split_text(some_text))
+    print([remove_newlines_except_after_period(s) for s in r_splitter.split_text(some_text)])
 
 
 def character():
     c_splitter = CharacterTextSplitter(
     chunk_size=450,
     chunk_overlap=0,
-    separator = ' '
+    separator = '\n'
     )
 
-    print(c_splitter.split_text(some_text))
+    # print(c_splitter.split_text(some_text))
+    print([remove_newlines_except_after_period(s) for s in c_splitter.split_text(some_text)])
 
 
 if __name__ == "__main__":
