@@ -12,6 +12,8 @@ from langchain_teddynote.document_loaders import HWPLoader # type: ignore
 from langchain_core.documents import Document # type: ignore
 from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignore
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
+from es_utils import transform_trim_string
+
 ''' split characters  ["\n\n", "\n", " ", ""]'''
 ''' length_function , chunk_size , chunk_overlap, add_start_index (Determines whether to include the start position of the chunk within the original document in the metadata) '''
 
@@ -31,16 +33,9 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 path = os.getcwd() + "/Data/"
 
 
-def remove_newlines_except_after_period(text):
-    """remove unnecessary characters"""
-    replace = re.sub(r'(?<!\.)(\n|\r\n)', ' ', text)
-    replace = re.sub(r' +', ' ', replace)
-
-    return replace
-    
 
 def process_pages(pages: List[Document]) -> List[Document]:
-    return [Document(page_content=remove_newlines_except_after_period(page.page_content), metadata=page.metadata) for page in pages]
+    return [Document(page_content=transform_trim_string(page.page_content), metadata=page.metadata) for page in pages]
 
 
 def loader_text(input_file, create_json=False):

@@ -1,7 +1,7 @@
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignore
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
-from text_loader import remove_newlines_except_after_period
+from es_utils import transform_trim_string
 
 
 some_text = """When writing documents, writers will use document structure to group content. \
@@ -21,7 +21,7 @@ def recursive():
     )
 
     # print(r_splitter.split_text(some_text))
-    print([remove_newlines_except_after_period(s) for s in r_splitter.split_text(some_text)])
+    print([transform_trim_string(s) for s in r_splitter.split_text(some_text)])
 
 
 def character():
@@ -32,7 +32,7 @@ def character():
     )
 
     # print(c_splitter.split_text(some_text))
-    print([remove_newlines_except_after_period(s) for s in c_splitter.split_text(some_text)])
+    print([transform_trim_string(s) for s in c_splitter.split_text(some_text)])
 
 
 if __name__ == "__main__":
