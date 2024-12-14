@@ -28,15 +28,17 @@ class bcolors:
         print("==========================================================")
     '''
 
-SUSPECT_SUBSTRINGS = ["/", "\\", "\"", "*", ":", "AND", "OR", "NOT", "?", "+", "-", "~", "(", ")", "{", "}", "$", ";",
-                    "[", "]", "!", "#", "%", "^"]
-
-
 
 class util:
+    ''' utils class with statismethod decorator for the pure function like util (when it's not update to the state of instance)'''
+    ''' instance method with __init__(self, argument) vs static method (don't need to 'self' argument)'''
+    
+    SUSPECT_SUBSTRINGS = ["/", "\\", "\"", "*", ":", "AND", "OR", "NOT", "?", "+", "-", "~", "(", ")", "{", "}", "$", ";", "[", "]", "!", "#", "%", "^"]
 
-    def __init__(self):
-        pass
+    @classmethod
+    def print_class_name(cls):
+        print(cls.name)
+
 
     @staticmethod
     def json_read_config(path):
@@ -48,7 +50,7 @@ class util:
     @staticmethod
     def has_suspect_characters(query_string):
         ''' es query string'''
-        for suspect in SUSPECT_SUBSTRINGS:
+        for suspect in util.SUSPECT_SUBSTRINGS:
             if suspect in query_string:
                 return True
         return False
