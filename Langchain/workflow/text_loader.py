@@ -12,7 +12,7 @@ from langchain_teddynote.document_loaders import HWPLoader # type: ignore
 from langchain_core.documents import Document # type: ignore
 from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignore
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
-from es_utils import transform_trim_string
+from es_utils import util
 
 ''' split characters  ["\n\n", "\n", " ", ""]'''
 ''' length_function , chunk_size , chunk_overlap, add_start_index (Determines whether to include the start position of the chunk within the original document in the metadata) '''
@@ -35,7 +35,7 @@ path = os.getcwd() + "/Data/"
 
 
 def process_pages(pages: List[Document]) -> List[Document]:
-    return [Document(page_content=transform_trim_string(page.page_content), metadata=page.metadata) for page in pages]
+    return [Document(page_content=util.transform_trim_string(page.page_content), metadata=page.metadata) for page in pages]
 
 
 def loader_text(input_file, create_json=False):
