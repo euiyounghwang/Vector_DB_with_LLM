@@ -68,6 +68,12 @@ pre-commit==3.3.3
 watchdog
 pytest
 ```
+
+Gradio (https://www.gradio.app/guides/quickstart) : Gradio is an open-source Python package that allows you to quickly build a demo or web application for your machine learning model, API, or any arbitrary Python function. You can then share a link to your demo or web application in just a few seconds using Gradio's built-in sharing features. 
+- Run : `./gradio-start.sh`
+- Installation : We recommend installing Gradio using pip, which is included by default in Python (`pip install --upgrade gradio`)
+
+
 - Codespaces (https://github.com/features/codespaces, https://velog.io/@profile_exe/Github-Codespaces): GitHub Codespaces gets you up and coding faster with fully configured, secure cloud development environments native to GitHub.
 
 - PyAutoGUI lets your Python scripts control the mouse and keyboard to automate interactions with other applications. The API is designed to be simple. PyAutoGUI works on Windows, macOS, and Linux, and runs on Python 2 and 3. To install with pip, run `pip install pyautogui`. See the Installation page for more details (https://pyautogui.readthedocs.io/en/latest/)
@@ -84,7 +90,7 @@ while True:
 ```                   
 
 - Jupyter Notebook (`./jupyter-notebook.sh`): http://localhost:8889/tree/Langchain/workflow/jupyter-workflow
-  - pip install jupyterthemes #installing jupyter themes
+  - pip install jupyterthemes #installing jupyter themes (jt -t oceans16 -T -N)
   - !jt -l #show list of themes
       jt -t monokai -T -N -l
       Available Themes:
