@@ -84,7 +84,20 @@ while True:
 ```                   
 
 - Jupyter Notebook (`./jupyter-notebook.sh`): http://localhost:8889/tree/Langchain/workflow/jupyter-workflow
-
+  - pip install jupyterthemes #installing jupyter themes
+  - !jt -l #show list of themes
+      jt -t monokai -T -N -l
+      Available Themes:
+      chesterish
+      grade3
+      gruvboxd
+      gruvboxl
+      monokai
+      oceans16
+      onedork
+      solarizedd
+      solarizedl
+    (.venv)
 
 
 #### Python V3.9 Install
