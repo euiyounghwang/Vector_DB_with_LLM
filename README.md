@@ -74,6 +74,9 @@ Gradio (https://www.gradio.app/guides/quickstart) : Gradio is an open-source Pyt
 - Installation : We recommend installing Gradio using pip, which is included by default in Python (`pip install --upgrade gradio`)
 
 
+Elasticsearch Gen-AI : https://github.com/elastic/elasticsearch-labs/blob/main/notebooks/generative-ai/chatbot.ipynb
+
+
 - Codespaces (https://github.com/features/codespaces, https://velog.io/@profile_exe/Github-Codespaces): GitHub Codespaces gets you up and coding faster with fully configured, secure cloud development environments native to GitHub.
 
 - PyAutoGUI lets your Python scripts control the mouse and keyboard to automate interactions with other applications. The API is designed to be simple. PyAutoGUI works on Windows, macOS, and Linux, and runs on Python 2 and 3. To install with pip, run `pip install pyautogui`. See the Installation page for more details (https://pyautogui.readthedocs.io/en/latest/)
