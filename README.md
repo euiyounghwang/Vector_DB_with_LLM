@@ -83,6 +83,9 @@ while True:
     time.sleep(10)
 ```                   
 
+- Jupyter Notebook (`./jupyter-notebook.sh`): http://localhost:8889/tree/Langchain/workflow/jupyter-workflow
+
+
 
 #### Python V3.9 Install
 - Gunicorn/FastAPI : https://chaechae.life/blog/fastapi-deployment-gunicorn#google_vignette
@@ -158,7 +161,7 @@ poetry add requests
 poetry add pyyaml
 poetry add elasticsearch==7.13
 poetry add python-dotenv
-
+poetry add jupyter
 
 # --
 # -- Vector
