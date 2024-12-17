@@ -28,5 +28,9 @@ export PYTHONDONTWRITEBYTECODE=1
 # (2~4) x $(NUM_CORES)
 
 python -m uvicorn main:app --reload --host=0.0.0.0 --port=7001 --workers 1
+
+# --
+# You can use multiple worker processes with the --workers CLI option with the fastapi or uvicorn commands to take advantage of multi-core CPUs, to run multiple processes in parallel.
+# --
 # gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:8001 --workers 4
 # poetry run uvicorn main:app --reload --host=0.0.0.0 --port=8001 --workers 4
