@@ -27,6 +27,15 @@ RAG(Retrieval Augemented Generation) is an AI technique that allows companies to
 - To achieve this improved accuracy, RAG works in conjunction with a specialized type of database — called a vector database — to store data in a numeric format that makes sense for AI, and retrieve it when prompted.
 - RAG can’t do its job without the vector database doing its job.
 - Step (https://blog.naver.com/htk1019/223442628204) : Document Loader ⮕ Text Splitter ⮕ Embedding ⮕ Vector Store (Saving vector) ⮕ Retriver
+- [1] Text Chunking - Split the data into small chunks.
+- [2] Embedding Transformation - Use an embedding model to convert each text chunk into an embedding.
+- [3] Vector Storage - Store the data embeddings in a vector database. 
+- [4] Text Mapping - Save the text chunks and their corresponding embeddings for future use. 
+- [5] Query Embedding - Transform the user's query into an embedding using the same embedding model used earlier. 
+- [6] Database Querying - Use the query embedding to retrieve relevant data embeddings from the vector database. 
+- [7] Similarity Search - To identify the most similar text chunks, perform the approximate nearest neighbor (ANN) search .
+- [8] Context Mapping - Map the retrieved vectors to corresponding text chunks. 
+- [9] LLM Response - Pass on the retrieved context in the prompt along with the query to the LLM to get the answer. This ensures that the answer relies solely on the given context.
 
 
 Apache Flink : Apache Kafka and Apache Flink are two powerful tools in big data and stream processing. While Kafka is known for its robust messaging system, Flink is good in real-time stream processing and analytics.
