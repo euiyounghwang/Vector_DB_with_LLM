@@ -14,5 +14,7 @@ else
     source $SCRIPTDIR/$VENV/Scripts/activate
 fi
 
+# pip install jupyterlab
+
 # jupyter notebook
 jupyter lab
