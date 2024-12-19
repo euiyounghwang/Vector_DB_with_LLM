@@ -256,6 +256,11 @@ def loader_text(input_file, create_json=False):
     else:
         texts = text_splitter.split_text(data)
 
+    ''' return langchain document type'''
+    if not create_json:
+        print("\ntype(document)", type(texts))
+        return texts
+    
     for i, text in enumerate(texts):
         if not isinstance(data[0], (str)):
             print(f"{i} : {text.page_content}")
@@ -265,9 +270,7 @@ def loader_text(input_file, create_json=False):
 
     ''' any indexing into es'''
     print(f"Progressing..")
-    if not create_json:
-        print("\n", content)
-        return content
+
     return create_es_json_format("test_context", input_file, content)
     
     
