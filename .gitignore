@@ -3,3 +3,4 @@ logs/
 __pycache__
 Langchain/workflow/chroma_data/
 Langchain/workflow/jupyter-workflow/.env
+Langchain/workflow/jupyter-workflow/train.pdf
