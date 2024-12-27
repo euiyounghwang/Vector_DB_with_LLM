@@ -41,6 +41,7 @@ xlrd = "^2.0.1"
 langchain-teddynote = "^0.3.37"
 jupyter = "^1.1.1"
 jupyterthemes = "^0.20.0"
+jupyter-scheduler = "^2.10.0"
 
 
 [build-system]
