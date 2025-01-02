@@ -16,5 +16,5 @@ fi
 
 # pip install jupyterlab
 
-# jupyter notebook
+#jupyter notebook
 jupyter lab
