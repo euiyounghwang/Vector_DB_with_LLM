@@ -122,7 +122,7 @@ while True:
 - Gunicorn/FastAPI : https://chaechae.life/blog/fastapi-deployment-gunicorn#google_vignette
 - Python3.11 with Openssl (https://datamoney.tistory.com/378)
 ```bash
-sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel git 
+sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel git sqlite-devel
 wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tgz 
 tar –zxvf Python-3.9.0.tgz or tar -xvf Python-3.9.0.tgz 
 cd Python-3.9.0 
