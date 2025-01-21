@@ -46,7 +46,7 @@ case "$1" in
         # Start daemon.
         echo "Starting $SERVICE_NAME";
         # nohup jupyter lab --ip 0.0.0.0 &> /dev/null &
-        jupyter lab --ip 0.0.0.0
+        jupyter lab --ip 0.0.0.0 --port=8889
         ;;
   stop)
         # Stop daemons.
