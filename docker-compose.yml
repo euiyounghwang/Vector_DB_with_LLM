@@ -1,8 +1,19 @@
 version: '3'
 #docker-compose -f ./docker-compose.yml up or docker-compose up
-name: python-cicd-restapi
+name: python-vector-tools-docker
 services:
   
+  # docker run -d --rm --name chromadb -p 8000:8000 -v ./chroma_db_path:/chroma/chroma -e IS_PERSISTENT=TRUE -e ANONYMIZED_TELEMETRY=TRUE chromadb/chroma:latest
+  # curl http://localhost:8000/api/v2/heartbeat
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    volumes:
+      - ./Langchain/chroma_data:/chroma/.chroma/index
+    ports:
+      - 8000:8000
+    networks:
+      - bridge
+
   jenkins:
     image: jenkins/jenkins:lts
     privileged: true
