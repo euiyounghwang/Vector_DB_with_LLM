@@ -76,21 +76,6 @@ class vector_store_chroma:
     ''' https://hyundoil.tistory.com/295 '''
 
     def __init__(self, reset_db):
-        self.docs_for_test_embed = [
-            Document(page_content="사과", metadata=dict(page=1)),
-            Document(page_content="애플", metadata=dict(page=1)),
-            Document(page_content="바나나", metadata=dict(page=2)),
-            Document(page_content="오렌지", metadata=dict(page=2)),
-            Document(page_content="고양이", metadata=dict(page=3)),
-            Document(page_content="야옹", metadata=dict(page=3)),
-            Document(page_content="강아지", metadata=dict(page=4)),
-            Document(page_content="멍멍", metadata=dict(page=4)),
-            Document(page_content="해", metadata=dict(page=5)),
-            Document(page_content="달", metadata=dict(page=5)),
-            Document(page_content="물", metadata=dict(page=6)),
-            Document(page_content="불", metadata=dict(page=6)),
-            Document(page_content="apple", metadata=dict(page=7)),
-        ]
         self.path = os.path.dirname(os.path.abspath(__file__)) + "/chroma_data"
         ''' initialize vector db'''
         self.initialize_db(reset_db)
@@ -101,8 +86,7 @@ class vector_store_chroma:
         )
 
         ''' create chroma_data director with vector data'''
-        # self.database = Chroma(persist_directory=self.path, embedding_function = self.embeddings)
-        self.database = Chroma.from_documents(self.docs_for_test_embed, self.embeddings)
+        self.database = Chroma(persist_directory=self.path, embedding_function = self.embeddings)
         
     
     def initialize_db(self, reset_db):
@@ -156,16 +140,16 @@ if __name__ == "__main__":
     (.venv)
     '''
     try:
-        faiss_vector_store = vector_store_faiss()
-        faiss_vector_store.similarity_search_with_score("사과")
+        # faiss_vector_store = vector_store_faiss()
+        # faiss_vector_store.similarity_search_with_score("사과")
         # faiss_vector_store.similarity_search_with_score("강아지")
         # faiss_vector_store.similarity_search_with_score("해")
 
         ''' chroma'''
-        # chroma_vector_store = vector_store_chroma(reset_db=False)
-        # input_list = ['test 데이터 입력1', 'test 데이터 입력2']
-        # # chroma_vector_store.similarity_search_with_score(input_list)
-        # chroma_vector_store.get_vector_store_chroma()
+        chroma_vector_store = vector_store_chroma(reset_db=False)
+        input_list = ['test 데이터 입력1', 'test 데이터 입력2']
+        # chroma_vector_store.similarity_search_with_score(input_list)
+        chroma_vector_store.get_vector_store_chroma()
 
     except Exception as e:
         print(e)

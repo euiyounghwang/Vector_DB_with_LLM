@@ -7,3 +7,6 @@ Langchain/workflow/jupyter-workflow/.env
 Langchain/workflow/jupyter-workflow/train.pdf
 Langchain/workflow/jupyter-workflow/.ipynb_checkpoints/
 Gradio/RAG/.venv/
+Langchain/chromdb_run/
+Langchain/workflow/jupyter-workflow/gsat_170823.pdf
+vector_venv/

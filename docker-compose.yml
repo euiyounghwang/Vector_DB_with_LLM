@@ -6,11 +6,19 @@ services:
   # docker run -d --rm --name chromadb -p 8000:8000 -v ./chroma_db_path:/chroma/chroma -e IS_PERSISTENT=TRUE -e ANONYMIZED_TELEMETRY=TRUE chromadb/chroma:latest
   # curl http://localhost:8000/api/v2/heartbeat
   chroma:
-    image: ghcr.io/chroma-core/chroma:latest
+    # image: ghcr.io/chroma-core/chroma:latest
+    image: chromadb/chroma:1.0.0
     volumes:
-      - ./Langchain/chroma_data:/chroma/.chroma/index
+      - ./Langchain/chroma_run:/chroma/.chroma/index
     ports:
       - 8000:8000
+    environment:
+      - ANONYMIZED_TELEMETRY=False
+      - ALLOW_RESET=True
+      - IS_PERSISTENT=True
+      # - CHROMA_API_IMPL=chromadb.api.segment.SegmentAPI
+      # - CHROMA_SERVER_AUTHN_CREDENTIALS=difyai123456
+      # - CHROMA_SERVER_AUTHN_PROVIDER=chromadb.auth.token_authn.TokenAuthenticationServerProvider
     networks:
       - bridge
 
