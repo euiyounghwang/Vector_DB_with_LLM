@@ -1,4 +1,13 @@
 
+#--
+# Git 한글깨짐
+cd .git
+vi config
+
+[i18n]
+	commitEncoding = utf-8
+	logOutputEncoding = utf-8
+
 # --=
 # 모델 수동 다운로드
 
