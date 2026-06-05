@@ -12,7 +12,7 @@ from langchain_teddynote.document_loaders import HWPLoader # type: ignore
 from langchain_core.documents import Document # type: ignore
 from langchain.text_splitter import RecursiveCharacterTextSplitter # type: ignore
 from langchain.text_splitter import CharacterTextSplitter # type: ignore
-from es_utils import util
+from .es_utils import util
 
 ''' split characters  ["\n\n", "\n", " ", ""]'''
 ''' length_function , chunk_size , chunk_overlap, add_start_index (Determines whether to include the start position of the chunk within the original document in the metadata) '''

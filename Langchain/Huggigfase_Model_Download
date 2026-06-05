@@ -1,0 +1,18 @@
+
+# --=
+# 모델 수동 다운로드
+
+git lfs install
+Git LFS initialized.
+
+git config --global http.sslBackend schannel
+
+git clone https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v1
+Cloning into 'distiluse-base-multilingual-cased-v1'...
+remote: Enumerating objects: 91, done.
+remote: Total 91 (delta 0), reused 0 (delta 0), pack-reused 91 (from 1)
+Receiving objects: 100% (91/91), 1.41 MiB | 10.06 MiB/s, done.
+Resolving deltas: 100% (31/31), done.
+Updating files: 100% (30/30), done.
+
+# --=
