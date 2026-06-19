@@ -1,0 +1,64 @@
+
+# --
+ollama 설치
+https://ollama.com/download/windows
+
+# Mac
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Linux
+curl -fsSL https://ollama.com/install.sh | sh
+
+ollama run '원하는 모델명:파라미터, 예: llama3.2:1b'
+# --
+
+# --
+OpenWebUI 설치
+# https://github.com/open-webui/open-webui
+
+# PIP
+pip install open-webui
+open-webui serve
+
+# Docker
+docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+docker exec -it ollama ollama run llama3.2
+
+# --
+
+# --
+# Docker Version
+services:
+  ollama:
+    volumes:
+      - ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    volumes:
+      - open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    restart: unless-stopped
+
+volumes:
+  ollama:
+  open-webui:
+
+docker exec -it ollama ollama run llama3.2
+
+# Docker run via docker compose
+docker compose up -d
+# --
