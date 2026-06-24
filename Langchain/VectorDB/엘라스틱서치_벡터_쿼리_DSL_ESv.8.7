@@ -1,0 +1,185 @@
+
+GET _cat/nodes
+
+GET _cat/indices
+
+
+# ********
+# Vector DB
+# ********
+GET jupyter-vector-search-demo
+
+GET jupyter-vector-search-demo/_search
+{
+  "track_total_hits": true
+}
+
+GET jupyter-vector-search-demo/_termvectors/1?fields=text_field
+
+
+GET jupyter-vector-search-demo/_termvectors/1
+{
+  "fields": ["text_field"]
+}
+
+
+# ********
+# NESTED Vector DB
+# ********
+
+DELETE jupyter-vector-search-multiple_vector-demo
+
+# [dense_vector] fields cannot be indexed if they're within [nested] mappings
+PUT jupyter-vector-search-multiple_vector-demo
+{
+  "mappings": {
+    "properties": {
+      "full_text": { "type": "text" },
+      "passages": {
+        "type": "object",
+        "properties": {
+          "text_chunk": { "type": "text" },
+          "chunk_embedding": {
+            "type": "dense_vector",
+            "dims": 512, 
+            "index": true,
+            "similarity": "cosine"
+          }
+        }
+      }
+    }
+  }
+}
+
+
+# ********
+# NESTED Sample
+# ********
+PUT my-index
+{
+  "mappings": {
+    "properties": {
+      "user": {
+        "type": "nested" 
+      }
+    }
+  }
+}
+
+GET my-index/_search
+{
+  "track_total_hits": true
+}
+
+POST /my-index/_termvectors
+{
+  "doc" : {
+    "group" : "Elasticsearch token analysis!"
+  },
+  "fields": ["group"]
+}
+
+
+PUT my-index/_doc/1
+{
+  "group": "fans",
+  "user": [
+    {
+      "first": "John",
+      "last": "Smith"
+    },
+    {
+      "first": "Alice",
+      "last": "White"
+    }
+  ]
+}
+
+GET my-index/_search
+{
+  "query": {
+    "nested": {
+      "path": "user",
+      "query": {
+        "bool": {
+          "must": [
+            { "match": { "user.first": "Alice" } },
+            { "match": { "user.last": "White" } }
+          ]
+        }
+      }
+    }
+  }
+}
+
+GET my-index/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "nested": {
+            "path": "user",
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "match": {
+                      "user.first": "Alice"
+                    }
+                  },
+                  {
+                    "match": {
+                      "user.last": "White"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+GET my-index/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "terms": {
+            "group": [
+              "fans"
+            ]
+          }
+        }
+      ],
+      "filter": [
+        {
+          "nested": {
+            "path": "user",
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "match": {
+                      "user.first": "Alice"
+                    }
+                  },
+                  {
+                    "match": {
+                      "user.last": "White"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
